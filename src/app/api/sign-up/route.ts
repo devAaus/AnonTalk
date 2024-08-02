@@ -1,8 +1,9 @@
+import { sendVerificationEmail } from '@/helpers/sendVerificatioEmail';
 import dbConnect from '@/lib/dbConnect';
+
 import UserModel from '@/model/User'
 import bcrypt from 'bcrypt';
 
-import { sendVerificatioEmail } from '@/helpers/sendVerificatioEmail';
 
 export const POST = async (request: Request) => {
     await dbConnect();
@@ -64,7 +65,7 @@ export const POST = async (request: Request) => {
             await newUser.save()
         }
 
-        const emailResponse = await sendVerificatioEmail(email, username, otp)
+        const emailResponse = await sendVerificationEmail(email, username, otp)
 
         if (!emailResponse.success) {
             return Response.json(
